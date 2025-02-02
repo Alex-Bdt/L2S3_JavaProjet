@@ -1,0 +1,59 @@
+package application;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class Menu_demmarage extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            Pane topPane = new Pane();
+            topPane.setPrefHeight(800);
+            topPane.setMaxWidth(600);
+
+     
+
+         
+            Button jouerButton = new Button("Jouer");
+            jouerButton.setPrefSize(200, 90);
+
+            Button sauvegardeButton = new Button("Sauvegarde");
+            sauvegardeButton.setPrefSize(160, 90);
+
+            Button exitButton = new Button("Exit");
+            exitButton.setPrefSize(160, 90);
+
+            // Disposer les boutons dans une VBox
+            VBox buttonBox = new VBox(35); // Espacement de 20px entre les boutons
+            buttonBox.setLayoutX(220); // Centrer horizontalement
+            buttonBox.setLayoutY(300); // Positionner verticalement
+            buttonBox.getChildren().addAll(jouerButton, sauvegardeButton, exitButton);
+
+            // Action pour le bouton Exit
+            exitButton.setOnAction(e -> {
+                primaryStage.close(); 
+            });
+
+         
+            topPane.getChildren().addAll( buttonBox);
+
+          
+            Scene scene = new Scene(topPane, 600, 800);
+            primaryStage.setTitle("Jeu Java");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}

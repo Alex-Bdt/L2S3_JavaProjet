@@ -1,0 +1,78 @@
+package application;
+
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.geometry.*;
+import java.util.ArrayList;
+import metier.Joueur;
+import metier.Item;
+
+public class ItemInterface {
+
+    private Joueur joueur;
+    private Monstre cible = null;
+
+    public ItemInterface(Joueur joueur) {
+        this.joueur = joueur;
+    }
+
+    public VBox createInterface() {
+        String styleCellule = "-fx-font-size: 14px; " + "-fx-font-family: 'Georgia'; " + "-fx-text-fill: white; " + "-fx-padding: 5px; " + "-fx-background-color: linear-gradient(#1E3A5F, #2C5F8A); " + "-fx-border-color: #5A9BD6; " + "-fx-border-width: 2px; " + "-fx-border-radius: 10px; ";
+        String styleCelluleSelectionnee = "-fx-font-size: 14px; " + "-fx-font-family: 'Georgia'; " + "-fx-text-fill: white; " + "-fx-padding: 5px; " + "-fx-background-color: lightblue; " + "-fx-border-color: #5A9BD6; " + "-fx-border-width: 2px; " + "-fx-border-radius: 10px; ";
+        String styleAlerte = "-fx-font-size: 20px; " + "-fx-font-family: 'Georgia'; " + "-fx-font-weight: bold; " + "-fx-text-fill: white; " + "-fx-background-color: linear-gradient(#1E3A5F, #2C5F8A); " + "-fx-border-color: #5A9BD6; " + "-fx-border-width: 4px; " + "-fx-border-radius: 10px; " + "-fx-background-radius: 10px; " + "-fx-padding: 10px; " + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 8, 0.7, 2, 2);";
+        String styleBoutonOk = "-fx-font-size: 16px; " + "-fx-font-family: 'Georgia'; " + "-fx-font-weight: bold; " + "-fx-text-fill: white; " + "-fx-background-color: linear-gradient(#1E3A5F, #2C5F8A); " + "-fx-border-color: #5A9BD6; " + "-fx-border-width: 2px; " + "-fx-border-radius: 10px; " + "-fx-background-radius: 10px; " + "-fx-padding: 10px; " + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 8, 0.7, 2, 2);";
+
+        VBox container = new VBox();
+        container.setPadding(new Insets(7));
+        container.setAlignment(Pos.CENTER_LEFT);
+
+        VBox itemBox = new VBox(5);
+        itemBox.setAlignment(Pos.CENTER_LEFT);
+
+        ArrayList<Item> inventaire = joueur.getInventaire();
+
+        for (Item item : inventaire) {
+            Label cellule = new Label(item.getNom() + "\n");
+            cellule.setStyle(styleCellule);
+            cellule.setPrefWidth(330);
+
+            cellule.setOnMouseClicked(event -> {
+                itemBox.getChildren().forEach(node -> node.setStyle(styleCellule));
+                cellule.setStyle(styleCelluleSelectionnee);
+                
+
+
+                
+                
+                
+                if (item.getEfficacite() != null) {
+                	item.Effet(joueur);
+                }
+                joueur.removeItem(item);
+                
+                container.getChildren().clear();
+                VBox updatedInterface = createInterface();
+                container.getChildren().add(updatedInterface);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setGraphic(null);
+                alert.setTitle("");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous avez utilisé : \n" + item.getNom());
+                alert.getDialogPane().setStyle(styleAlerte);
+                alert.getDialogPane().lookup(".label").setStyle("-fx-text-fill: white;");
+                Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+                if (okButton != null) {
+                    okButton.setStyle(styleBoutonOk);
+                }
+                alert.showAndWait();
+            });
+
+            itemBox.getChildren().add(cellule);
+        }
+
+        container.getChildren().add(itemBox);
+        return container;
+    }
+
+}

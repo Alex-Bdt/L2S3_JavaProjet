@@ -1,0 +1,21 @@
+.scroll-pane {
+    -fx-background-color: transparent; /* Fond transparent du ScrollPane */
+    -fx-border-color: transparent; /* Supprime les bordures */
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent; /* Fond transparent de la vue */
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: transparent; /* Fond transparent des barres */
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #5A9BD6; /* Couleur de la barre de défilement */
+    -fx-background-radius: 5px; /* Coins arrondis pour la barre */
+}
+
+.scroll-bar .track {
+    -fx-background-color: #1E3A5F; /* Fond de la piste de défilement */
+}
